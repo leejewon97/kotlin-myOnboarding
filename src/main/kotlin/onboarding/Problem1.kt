@@ -39,7 +39,7 @@ fun calcPage(page: Int): Int {
         tmp = tmp / 10
     }
     tmp = page
-    while (tmp > 0){
+    while (tmp > 0) {
         multi *= tmp % 10
         tmp = tmp / 10
     }
