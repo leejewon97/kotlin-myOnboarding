@@ -33,7 +33,14 @@ fun solution7(
 				visit4nd++
 		}
 	}
+
+	plusScore.addAll(visitScore)
+	result = organizeResult(plusScore)
 	return result
+}
+
+fun organizeResult(plusScore: MutableList<List<Any>>): List<String> {
+	
 }
 
 fun calcScore(mutual4ndList: List<String>, i: Int): List<List<Any>> {
