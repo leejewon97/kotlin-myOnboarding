@@ -14,26 +14,30 @@ fun solution7(
 	visitors: List<String>
 ): List<String> {
 //    TODO("프로그램 구현")
-	var result: List<String>
+	var result = listOf<String>()
 	val friendsList: List<String> = make4ndsList(user, friends)
 	val mutual4ndList: List<String> = makeMutual4ndList(friendsList, friends)
 	val mutualScore = calcScore(mutual4ndList, 10)
 	val visitScore = calcScore(visitors, 1).toMutableList()
-	val plusScore: MutableList<Any>
-	// [a,10] [j,20]
-	// [a,1] [b,1] [c,2]
+	val plusScore = mutableListOf<List<Any>>()
+	// [b,10] [j,20]
+	// [a,1] [b,1] [c,2] [j,1]
 	for (mut4nd in mutualScore){
-		for (visit4nd in visitScore){
-			if (mut4nd[0] == visit4nd[0]) {
-				plusScore.add(listOf(mut4nd[0], mut4nd[1] + visit4nd[1]))
-				visitScore.remove(visit4nd)
+		var visit4nd = 0
+		while (visit4nd < visitScore.size){
+			if (mut4nd[0] == visitScore[visit4nd][0]) {
+				plusScore.add(listOf(mut4nd[0], mut4nd[1] as Int  + visitScore[visit4nd][1] as Int))
+				visitScore.removeAt(visit4nd)
 			}
+			else
+				visit4nd++
 		}
 	}
+	return result
 }
 
-fun calcScore(mutual4ndList: List<String>, i: Int): List<Any> {
-	return listOf("4nd", 100)
+fun calcScore(mutual4ndList: List<String>, i: Int): List<List<Any>> {
+	return listOf( listOf("4nd", 100))
 }
 
 fun makeMutual4ndList(friendsList: List<String>, friends: List<List<String>>): List<String> {
