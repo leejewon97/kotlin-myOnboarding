@@ -69,7 +69,11 @@ fun calcScore(mutual4ndList: List<String>, i: Int): List<List<Any>> {
 }
 
 fun makeMutual4ndList(friendsList: List<String>, friends: List<List<String>>): List<String> {
-	return listOf("4nd")
+	val mutual4ndList = mutableListOf<String>()
+	for (userFriend in friendsList){
+		mutual4ndList.addAll(make4ndsList(userFriend, friends))
+	}
+	return mutual4ndList
 }
 
 fun make4ndsList(user: String, friends: List<List<String>>): List<String> {
