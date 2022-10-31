@@ -14,7 +14,7 @@ fun solution7(
 	visitors: List<String>
 ): List<String> {
 //    TODO("프로그램 구현")
-	var result = listOf<String>()
+	val result: List<String>
 	val friendsList: List<String> = make4ndsList(user, friends)
 	val mutual4ndList: List<String> = makeMutual4ndList(friendsList, friends)
 	val mutualScore = calcScore(mutual4ndList, 10)
@@ -22,14 +22,13 @@ fun solution7(
 	val plusScore = mutableListOf<List<Any>>()
 	// [b,10] [j,20]
 	// [a,1] [b,1] [c,2] [j,1]
-	for (mut4nd in mutualScore){
+	for (mut4nd in mutualScore) {
 		var visit4nd = 0
-		while (visit4nd < visitScore.size){
+		while (visit4nd < visitScore.size) {
 			if (mut4nd[0] == visitScore[visit4nd][0]) {
-				plusScore.add(listOf(mut4nd[0], mut4nd[1] as Int  + visitScore[visit4nd][1] as Int))
+				plusScore.add(listOf(mut4nd[0], mut4nd[1] as Int + visitScore[visit4nd][1] as Int))
 				visitScore.removeAt(visit4nd)
-			}
-			else
+			} else
 				visit4nd++
 		}
 	}
@@ -41,18 +40,18 @@ fun solution7(
 
 fun organizeResult(plusScore: MutableList<List<Any>>): List<String> {
 	// 점수, 이름순 정렬
-	plusScore.sortWith(compareBy({it[1] as Comparable<*>}, {it[0] as Comparable<*>}))
+	plusScore.sortWith(compareBy({ it[1] as Comparable<*> }, { it[0] as Comparable<*> }))
 	// 5개까지만
 	val psLength = plusScore.size
 	if (psLength > 5) {
 		var i = 5
-		while (i < psLength){
+		while (i < psLength) {
 			plusScore.removeAt(i)
 			i++
 		}
 	}
 	// 점수 0 제외
-	for (friend in plusScore){
+	for (friend in plusScore) {
 		if (friend[1] == 0)
 			plusScore.remove(friend)
 	}
@@ -64,13 +63,29 @@ fun organizeResult(plusScore: MutableList<List<Any>>): List<String> {
 	return result
 }
 
-fun calcScore(mutual4ndList: List<String>, i: Int): List<List<Any>> {
-	return listOf( listOf("4nd", 100))
+fun calcScore(friendsList: List<String>, i: Int): List<List<Any>> {
+// 4. 3에서 중복하는 만큼 +10  (ex : [a, 20], [j, 20])
+//	 4-1. 새로 들어오면, 생성 후 10
+//	 4-2. 이미 존재하면, 해당 아이디 +10
+	val scoreList = mutableListOf<MutableList<Any>>()
+	for (friend in friendsList) {
+		var new = true
+		for (score in scoreList) {
+			if (friend == score[0]) {
+				score[1] = score[1] as Int + i
+				new = false
+				break
+			}
+		}
+		if (new)
+			scoreList.add(mutableListOf(friend, i))
+	}
+	return scoreList
 }
 
 fun makeMutual4ndList(friendsList: List<String>, friends: List<List<String>>): List<String> {
 	val mutual4ndList = mutableListOf<String>()
-	for (userFriend in friendsList){
+	for (userFriend in friendsList) {
 		mutual4ndList.addAll(make4ndsList(userFriend, friends))
 	}
 	return mutual4ndList
@@ -78,7 +93,7 @@ fun makeMutual4ndList(friendsList: List<String>, friends: List<List<String>>): L
 
 fun make4ndsList(user: String, friends: List<List<String>>): List<String> {
 	val friendsList = mutableListOf<String>()
-	for (friend in friends){
+	for (friend in friends) {
 		if (friend[0] == user)
 			friendsList.add(friend[1])
 		else if (friend[1] == user)
