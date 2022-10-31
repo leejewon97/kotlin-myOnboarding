@@ -40,7 +40,28 @@ fun solution7(
 }
 
 fun organizeResult(plusScore: MutableList<List<Any>>): List<String> {
-	
+	// 점수, 이름순 정렬
+	plusScore.sortWith(compareBy({it[1] as Comparable<*>}, {it[0] as Comparable<*>}))
+	// 5개까지만
+	val psLength = plusScore.size
+	if (psLength > 5) {
+		var i = 5
+		while (i < psLength){
+			plusScore.removeAt(i)
+			i++
+		}
+	}
+	// 점수 0 제외
+	for (friend in plusScore){
+		if (friend[1] == 0)
+			plusScore.remove(friend)
+	}
+	// 이름만 건넴
+	val result = mutableListOf<String>()
+	for (friend in plusScore) {
+		result.add(friend[0].toString())
+	}
+	return result
 }
 
 fun calcScore(mutual4ndList: List<String>, i: Int): List<List<Any>> {
