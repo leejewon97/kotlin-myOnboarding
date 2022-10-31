@@ -73,5 +73,12 @@ fun makeMutual4ndList(friendsList: List<String>, friends: List<List<String>>): L
 }
 
 fun make4ndsList(user: String, friends: List<List<String>>): List<String> {
-	return listOf("4nd")
+	val friendsList = mutableListOf<String>()
+	for (friend in friends){
+		if (friend[0] == user)
+			friendsList.add(friend[1])
+		else if (friend[1] == user)
+			friendsList.add(friend[0])
+	}
+	return friendsList
 }
