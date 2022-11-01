@@ -2,6 +2,11 @@ package onboarding
 
 import java.util.regex.Pattern
 
+//1. 요구사항에 맞는 input이 들어왔는지 먼저 확인, 아니면 Is not valid return
+//2. forms의 각 항목을 훑어보는 반복문에서 닉네임의 길이만큼 이중반복문 생성
+//3. 닉네임에서 두 글자씩 떼서 본인을 제외한 나머지에서 겹치는 지 확인
+//4. 겹치는대로 모조리 emails에 add
+//5. emails 중복제거, 오름차순 정렬, return
 fun solution6(forms: List<List<String>>): List<String> {
 //    TODO("프로그램 구현")
 	if (!validCheck(forms))
@@ -54,7 +59,7 @@ fun emailCheck(forms: List<List<String>>): Boolean {
 }
 
 fun checkOverlap(crew: Int, i: Int, forms: List<List<String>>): List<String> {
-	var emails = mutableListOf<String>()
+	val emails = mutableListOf<String>()
 	val word = forms[crew][1].substring(i, i + 2)
 	var idx = 0
 	while (idx < forms.size) {
